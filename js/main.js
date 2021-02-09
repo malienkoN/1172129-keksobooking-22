@@ -18,6 +18,15 @@ function getRandomElement(array) {
   return array[index];
 }
 
+function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
+
+function getRandomSlice(array) {
+  [array].sort(shuffle(array)).slice(0, getRandomElement(array));
+  return array;
+}
+
 
 
 function createAdvert() {
@@ -45,7 +54,9 @@ function createAdvert() {
       guests: getRandomInt(75, 93),
       checkin: getRandomElement(['12:00', '13:00', '14:00']),
       checkout: getRandomElement(['12:00', '13:00', '14:00']),
+      features: getRandomSlice(['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner']),
       description: 'Светлое и просторное помещение',
+      photos: getRandomSlice(['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg']),
     },
   }
 }
@@ -63,7 +74,7 @@ function generateAdverts() {
 
 const resultAdverts = generateAdverts();
 
-// console.log(resultAdverts);
+console.log(resultAdverts);
 
 
 /* В объекте offer не сделаны поля: feature & photos  */

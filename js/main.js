@@ -18,13 +18,12 @@ function getRandomElement(array) {
   return array[index];
 }
 
-function shuffle(array) {
-  array.sort(() => Math.random() - 0.5);
+function shuffle() {
+  return Math.random() - 0.5;
 }
 
 function getRandomSlice(array) {
-  [array].sort(shuffle(array)).slice(0, getRandomElement(array));
-  return array;
+  return array.sort(shuffle).slice(0, getRandomInt(0, array.length));
 }
 
 
@@ -75,6 +74,3 @@ function generateAdverts() {
 const resultAdverts = generateAdverts();
 
 console.log(resultAdverts);
-
-
-/* В объекте offer не сделаны поля: feature & photos  */

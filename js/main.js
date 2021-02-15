@@ -1,4 +1,4 @@
-import {generateAdverts} from'./data';
+import {generateAdverts} from'./data.js';
 
 const resultAdverts = generateAdverts();
 

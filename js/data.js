@@ -1,4 +1,4 @@
-import {getRandomFloat, getRandomInt, addingZero, getRandomElement, getRandomSlice} from './util';
+import {getRandomFloat, getRandomInt, addingZero, getRandomElement, getRandomSlice} from './util.js';
 
 function createAdvert() {
   const location = {

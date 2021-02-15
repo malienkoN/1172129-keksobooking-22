@@ -1,5 +1,3 @@
-function getRandomArbitrary(min, max) {
-  return Math.random() * (max - min) + min;
-}
+import {generateAdverts} from'./data.js';
 
-getRandomArbitrary(1, 10);
+generateAdverts();

@@ -22,8 +22,8 @@ function shuffle() {
   return Math.random() - 0.5;
 }
 
-function getRandomSlice(array) {
-  return array.sort(shuffle).slice(0, getRandomInt(0, array.length));
+function getRandomSlice(array, min = 0) {
+  return array.sort(shuffle).slice(0, getRandomInt(min, array.length));
 }
 
 export {getRandomFloat, getRandomInt, addingZero, getRandomElement, getRandomSlice};

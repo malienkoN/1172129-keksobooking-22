@@ -22,7 +22,7 @@ function shuffle() {
   return Math.random() - 0.5;
 }
 
-function getRandomSlice(array, min = 0) {
+function getRandomSlice(array, min = 1) {
   return array.sort(shuffle).slice(0, getRandomInt(min, array.length));
 }
 

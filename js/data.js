@@ -2,8 +2,8 @@ import {getRandomFloat, getRandomInt, addingZero, getRandomElement, getRandomSli
 
 function createAdvert() {
   const location = {
-    x: getRandomFloat(35.65000, 35.70000).toFixed(5),
-    y: getRandomFloat(139.70000, 139.80000).toFixed(5),
+    x: +getRandomFloat(35.65000, 35.70000).toFixed(5),
+    y: +getRandomFloat(139.70000, 139.80000).toFixed(5),
   }
 
   return {

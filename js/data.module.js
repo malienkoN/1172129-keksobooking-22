@@ -1,9 +1,9 @@
-import {getRandomFloat, getRandomInt, addingZero, getRandomElement, getRandomSlice} from './util.js';
+import {getRandomFloat, getRandomInt, addingZero, getRandomElement, getRandomSlice} from './util.module.js';
 
 function createAdvert() {
   const location = {
-    x: getRandomFloat(35.65000, 35.70000).toFixed(5),
-    y: getRandomFloat(139.70000, 139.80000).toFixed(5),
+    x: +getRandomFloat(35.65000, 35.70000).toFixed(5),
+    y: +getRandomFloat(139.70000, 139.80000).toFixed(5),
   }
 
   return {

@@ -1,3 +1,12 @@
-import {generateAdverts} from'./data.js';
+import {generateAdverts} from './data.module.js';
+import {render} from'./render.module.js';
 
-generateAdverts();
+const data = generateAdverts();
+
+// data.forEach(advert => {
+//   render(advert);
+// });
+
+render(data[0]);
+
+// console.log(data[0]);

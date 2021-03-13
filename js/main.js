@@ -1,5 +1,6 @@
 import {generateAdverts} from './data.module.js';
 import {render} from'./render.module.js';
+import './form.module.js';
 
 const data = generateAdverts();
 

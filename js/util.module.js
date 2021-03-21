@@ -26,4 +26,10 @@ function getRandomSlice(array, min = 1) {
   return array.sort(shuffle).slice(0, getRandomInt(min, array.length));
 }
 
-export {getRandomFloat, getRandomInt, addingZero, getRandomElement, getRandomSlice};
+const nodeToString = node => {
+  const div =  document.createElement('div');
+  div.appendChild(node);
+  return div.innerHTML;
+}
+
+export {getRandomFloat, getRandomInt, addingZero, getRandomElement, getRandomSlice, nodeToString};

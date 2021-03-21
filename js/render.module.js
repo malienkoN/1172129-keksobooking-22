@@ -1,5 +1,4 @@
 const template = document.querySelector('#card');
-const mapCanvas = document.querySelector('#map-canvas');
 
 const translateType = {
   palace: 'Дворец',
@@ -9,7 +8,7 @@ const translateType = {
 }
 
 
-const render = (advert) => {
+const createPopup = (advert) => {
   const clone = template.content.cloneNode(true);
 
   // title
@@ -66,7 +65,7 @@ const render = (advert) => {
   });
 
   advert.offer.features.forEach( feature =>{
-    clone.querySelector(`.popup__feature--${feature}`).style.display = 'block';
+    clone.querySelector(`.popup__feature--${feature}`).style.display = 'inline-block';
   });
 
   // description
@@ -93,7 +92,7 @@ const render = (advert) => {
     popupAvatar.style.display = 'none';
   }
 
-  mapCanvas.appendChild(clone);
+  return clone;
 }
 
-export {render};
+export {createPopup};

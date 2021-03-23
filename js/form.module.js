@@ -33,3 +33,30 @@ checkIn.addEventListener('change', () => {
 checkOut.addEventListener('change', () => {
   checkIn.value = checkOut.value;
 });
+
+
+const roomNumberSelect = document.querySelector('#room_number');
+
+const capacitySelect = document.querySelector('#capacity');
+const capacitySelectChildren = capacitySelect.children;
+
+const checkRoomNumber = () => {
+  const roomNumber = Number(roomNumberSelect.value);// числовой формат из цифр, которые в были строкой
+  for (let capacitySelectChild of capacitySelectChildren) {
+    capacitySelectChild.setAttribute('disabled', '');
+    capacitySelectChild.removeAttribute('selected');
+  }
+  if (roomNumber === 100) {
+    capacitySelect.querySelector('[value="0"]').removeAttribute('disabled');
+  } else {
+    for (let capacitySelectChild of capacitySelectChildren) {
+      if (Number(capacitySelectChild.value) > 0 && Number(capacitySelectChild.value) <= roomNumber) {
+        capacitySelectChild.removeAttribute('disabled');
+      }
+    }
+  }
+  capacitySelect.value = capacitySelect.querySelector('option:not(:disabled)').value;
+}
+checkRoomNumber();
+
+roomNumberSelect.addEventListener('change', checkRoomNumber);

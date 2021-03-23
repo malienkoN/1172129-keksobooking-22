@@ -41,7 +41,7 @@ const capacitySelect = document.querySelector('#capacity');
 const capacitySelectChildren = capacitySelect.children;
 
 const checkRoomNumber = () => {
-  const roomNumber = Number(roomNumberSelect.value);// числовой формат из цифр, которые в были строкой
+  const roomNumber = Number(roomNumberSelect.value);
   for (let capacitySelectChild of capacitySelectChildren) {
     capacitySelectChild.setAttribute('disabled', '');
     capacitySelectChild.removeAttribute('selected');

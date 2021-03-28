@@ -1,6 +1,6 @@
-import {generateAdverts} from './data.module.js';
 import {createPopup} from './render.module.js';
 import {nodeToString} from './util.module.js';
+import {getAdverts} from './data.module.js';
 
 const adForm = document.querySelector('.ad-form');
 const mapFilters = document.querySelector('.map__filters');
@@ -31,7 +31,7 @@ const map = L.map('map')
     address.setAttribute('readonly', 'readonly');
     address.value = `${defaultAddressObject.lat}, ${defaultAddressObject.lng}`;
   })
-  .setView(defaultAddressObject, 13);
+  .setView(defaultAddressObject, 9);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -59,29 +59,28 @@ const marker = L.marker(
 
 marker.addTo(map);
 
-const points = generateAdverts();
+getAdverts(points => {
+  points.forEach( point => {
 
-points.forEach( point => {
-  // console.log(point);
+    const icon = L.icon({
+      iconUrl: 'img/pin.svg',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+    });
 
-  const icon = L.icon({
-    iconUrl: 'img/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    const marker = L.marker(
+      {
+        lat:point.location.lat,
+        lng:point.location.lng,
+      },
+      {
+        icon,
+      },
+    );
+
+    marker.addTo(map);
+    marker.bindPopup(nodeToString(createPopup(point)));
   });
-
-  const marker = L.marker(
-    {
-      lat:point.location.x,
-      lng:point.location.y,
-    },
-    {
-      icon,
-    },
-  );
-
-  marker.addTo(map);
-  marker.bindPopup(nodeToString(createPopup(point)));
 });
 
 marker.on('moveend', (evt) => {

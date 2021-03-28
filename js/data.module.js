@@ -1,46 +1,93 @@
-import {getRandomFloat, getRandomInt, addingZero, getRandomElement, getRandomSlice} from './util.module.js';
-
-function createAdvert() {
-  const location = {
-    x: +getRandomFloat(35.65000, 35.70000).toFixed(5),
-    y: +getRandomFloat(139.70000, 139.80000).toFixed(5),
-  }
-
-  return {
-    author: {
-      avatar: `img/avatars/user${addingZero(getRandomInt(1, 8))}.png`,
-    },
-
-    location: {
-      x: location.x,
-      y: location.y,
-    },
-
-    offer: {
-      title: 'Заголовок',
-      address: `${location.x}, ${location.y}`,
-      price: getRandomInt(5000, 20000),
-      type: getRandomElement(['palace', 'flat', 'house', 'bungalow']),
-      rooms: getRandomInt(1, 30),
-      guests: getRandomInt(75, 93),
-      checkin: getRandomElement(['12:00', '13:00', '14:00']),
-      checkout: getRandomElement(['12:00', '13:00', '14:00']),
-      features: getRandomSlice(['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner']),
-      description: 'Светлое и просторное помещение',
-      photos: getRandomSlice(['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg']),
-    },
-  }
+const getAdverts = (callback) => {
+  fetch('https://22.javascript.pages.academy/keksobooking/data')
+    .then((response) => response.json())
+    .then((adverts) => {
+      callback(adverts);
+    });
 }
 
-function generateAdverts() {
-  const adverts = [];
+const sendFormData = (data, onSuccess, onFail) => {
+  fetch(
+    'https://22.javascript.pages.academy/keksobookings',
+    {
+      method: 'POST',
+      credentials: 'same-origin',
+      body: data,
+    },
+  )
 
-  for (let i = 0; i < 10; i++) {
-    const advert = createAdvert();
-    adverts.push(advert);
-  }
+    .then((response) => {
+      return response.json();
+    })
 
-  return adverts;
+    .then((json) => {
+      onSuccess(json);
+    })
+
+    .catch((err) => {
+      onFail(err);
+    })
 }
 
-export {generateAdverts};
+const main = document.querySelector('main');
+
+const wrappedNode = (element) => {
+  const wrapper = document.createElement('div');
+  wrapper.appendChild(element);
+
+  return wrapper;
+};
+
+document.querySelector('.ad-form').addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const formData = new FormData(evt.target);
+
+  const onSuccess = () => {
+    const clone = document.querySelector('#success').content.cloneNode(true);
+    const node = wrappedNode(clone);
+    main.appendChild(node);
+
+    const escEvent = (evt) => {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        window.removeEventListener('keydown', escEvent);
+        node.remove();
+      }
+    }
+
+    window.addEventListener('keydown', escEvent);
+  }
+
+  const onFail = () => {
+    const clone = document.querySelector('#error').content.cloneNode(true);
+    const node = wrappedNode(clone);
+    main.appendChild(node);
+
+    const escEvent = (evt) => {
+      if (evt.key === 'Escape') {
+        evt.preventDefault();
+        window.removeEventListener('keydown', escEvent);
+        node.remove();
+      }
+    }
+
+    window.addEventListener('keydown', escEvent);
+
+    document.querySelector('.error__button').addEventListener('click', (evt) => {
+      evt.preventDefault();
+
+      node.remove();
+    });
+
+    node.addEventListener('click', (evt) => {
+      if (evt.target.closest('.error')) {
+        evt.target.remove();
+      }
+    })
+  }
+
+  sendFormData(formData, onSuccess, onFail);
+});
+
+export {getAdverts, sendFormData};

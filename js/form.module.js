@@ -1,5 +1,12 @@
+import {clearMap} from './map.module.js';
+import {resetFilter} from './filter.module.js';
+
 const select = document.getElementById('type');
 const price = document.getElementById('price');
+const title = document.querySelector('#title');
+const roomNumber = document.querySelector('#room_number');
+const capacity = document.querySelector('#capacity');
+const description = document.querySelector('#description');
 
 select.addEventListener('change', () => {
   if (select.value === 'bungalow') {
@@ -22,6 +29,20 @@ select.addEventListener('change', () => {
     price.setAttribute('min', '10000');
   }
 });
+
+price.addEventListener('invalid', () => {
+
+  const validity = (() => {
+    switch (select.value) {
+      case 'flat': return price.value < 1000 ? 'Минимальная стоимость квартиры не менее 1000': '';
+      case 'palace': return price.value < 10000 ? 'Дворец дешевле 10000? Вы уверены что это дворец?': '';
+      case 'house': return price.value < 5000 ? 'Обычно дома начинаются от 5000': '';
+      case 'bungalow': return price.value < 0 ? 'Вы за это ещё доплачиваете?': '';
+    }
+  })();
+
+  price.setCustomValidity(validity);
+})
 
 const checkIn = document.getElementById('timein');
 const checkOut = document.getElementById('timeout');
@@ -57,6 +78,33 @@ const checkRoomNumber = () => {
   }
   capacitySelect.value = capacitySelect.querySelector('option:not(:disabled)').value;
 }
+
+
+const form = document.querySelector('.ad-form');
+
+form.addEventListener('reset', (evt) => {
+  evt.preventDefault();
+
+  clearMap();
+  clearForm();
+  resetFilter();
+});
+
+const clearForm = () => {
+  price.value = '';
+  title.value = '';
+  select.value = 'flat';
+  checkIn.value = '12:00';
+  checkOut.value = '12:00';
+  roomNumber.value = '1';
+  capacity.value = '1';
+  description.value = '';
+  document.querySelectorAll('.features input').forEach( (feature) => {
+    feature.checked = false;
+  });
+}
+
+
 checkRoomNumber();
 
 roomNumberSelect.addEventListener('change', checkRoomNumber);

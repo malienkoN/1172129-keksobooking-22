@@ -8,7 +8,7 @@ const getAdverts = (callback) => {
 
 const sendFormData = (data, onSuccess, onFail) => {
   fetch(
-    'https://22.javascript.pages.academy/keksobookings',
+    'https://22.javascript.pages.academy/keksobooking',
     {
       method: 'POST',
       credentials: 'same-origin',
@@ -31,7 +31,7 @@ const sendFormData = (data, onSuccess, onFail) => {
 
 const main = document.querySelector('main');
 
-const wrappedNode = (element) => {
+const doWrappedNode = (element) => {
   const wrapper = document.createElement('div');
   wrapper.appendChild(element);
 
@@ -41,38 +41,40 @@ const wrappedNode = (element) => {
 document.querySelector('.ad-form').addEventListener('submit', (evt) => {
   evt.preventDefault();
 
+  console.log(evt.target.valid);
+
   const formData = new FormData(evt.target);
 
   const onSuccess = () => {
     const clone = document.querySelector('#success').content.cloneNode(true);
-    const node = wrappedNode(clone);
+    const node = doWrappedNode(clone);
     main.appendChild(node);
 
-    const escEvent = (evt) => {
+    const onEscEvent = (evt) => {
       if (evt.key === 'Escape') {
         evt.preventDefault();
-        window.removeEventListener('keydown', escEvent);
+        window.removeEventListener('keydown', onEscEvent);
         node.remove();
       }
     }
 
-    window.addEventListener('keydown', escEvent);
+    window.addEventListener('keydown', onEscEvent);
   }
 
   const onFail = () => {
     const clone = document.querySelector('#error').content.cloneNode(true);
-    const node = wrappedNode(clone);
+    const node = doWrappedNode(clone);
     main.appendChild(node);
 
-    const escEvent = (evt) => {
+    const onEscEvent = (evt) => {
       if (evt.key === 'Escape') {
         evt.preventDefault();
-        window.removeEventListener('keydown', escEvent);
+        window.removeEventListener('keydown', onEscEvent);
         node.remove();
       }
     }
 
-    window.addEventListener('keydown', escEvent);
+    window.addEventListener('keydown', onEscEvent);
 
     document.querySelector('.error__button').addEventListener('click', (evt) => {
       evt.preventDefault();

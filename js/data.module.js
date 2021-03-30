@@ -41,8 +41,6 @@ const doWrappedNode = (element) => {
 document.querySelector('.ad-form').addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  console.log(evt.target.valid);
-
   const formData = new FormData(evt.target);
 
   const onSuccess = () => {
